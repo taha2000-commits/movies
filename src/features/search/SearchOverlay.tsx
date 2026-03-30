@@ -1,5 +1,5 @@
 import { BiSearch } from "react-icons/bi";
-import CustomeSelect from "../../components/CustomeSelect";
+import CustomSelect from "../../components/CustomSelect";
 import { MutableRefObject, useContext, useRef, useState } from "react";
 import { MovieType } from "../../services/all";
 import { useSearchedData } from "../../hooks/useSearchedData";
@@ -53,7 +53,7 @@ const SearchOverlay = () => {
               <BiSearch />
             </button>
           </div>
-          <CustomeSelect
+          <CustomSelect
             options={[
               { innerText: "all", value: "multi" },
               { innerText: MovieType.MOVIE, value: MovieType.MOVIE },

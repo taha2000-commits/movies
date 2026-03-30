@@ -8,12 +8,23 @@ import Loader from "../components/Loader";
 import Pagination from "../components/Pagination";
 import { useState } from "react";
 import { format } from "date-fns";
+import { FaFilter } from "react-icons/fa";
+import { FaX } from "react-icons/fa6";
 
 const AllMoviesPage = ({ type }: { type: MovieType }) => {
   const [URLSearchParams, SetURLSearchParams] = useSearchParams();
   const [page, setPage] = useState<number>(
     Number(URLSearchParams.get("page") || 1),
   );
+  const [filterIconClicked, setFilterIconClicked] = useState(false);
+
+  const closeFilterSidebar = () => {
+    setFilterIconClicked(false);
+  };
+
+  const onFilterIconClick = () => {
+    setFilterIconClicked((is) => !is);
+  };
 
   const searchParams = {
     with_original_language: URLSearchParams.get("lang") || undefined,
@@ -62,9 +73,25 @@ const AllMoviesPage = ({ type }: { type: MovieType }) => {
 
   return (
     <div className="flex min-h-screen w-full flex-col pt-20 sm:flex-row">
-      <div className="w-full p-5 sm:w-[300px]">
-        <SortAndFilterList type={type} />
+      <div
+        className={`fixed top-0 z-[1000] h-full w-fit min-w-[300px] max-w-[300px] bg-black p-5 transition-all duration-1000 ${
+          !filterIconClicked ? "-translate-x-full" : ""
+        }`}
+      >
+        <div className={`scrollbar h-full overflow-y-auto pr-2`}>
+          <SortAndFilterList
+            type={type}
+            closeFilterSidebar={closeFilterSidebar}
+          />
+          <div
+            onClick={onFilterIconClick}
+            className={`overflow-y-uto absolute left-full top-[50%] z-[1000] flex aspect-square -translate-y-[50%] cursor-pointer items-center justify-center rounded-br-full rounded-tr-full p-4 pl-2 transition-all duration-1000 ${filterIconClicked ? "bg-black" : "bg-white"}`}
+          >
+            {filterIconClicked ? <FaX /> : <FaFilter className="text-black" />}
+          </div>
+        </div>
       </div>
+
       <div className="w-full">
         {isLoading ? (
           <Loader />

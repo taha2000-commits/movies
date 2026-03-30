@@ -1,4 +1,4 @@
-import CustomeSelect, { SelectItem } from "../../components/CustomeSelect";
+import CustomSelect, { SelectItem } from "../../components/CustomSelect";
 import { MdOutlineTranslate } from "react-icons/md";
 import { AnyObject, TranslationMedia } from "../../types/types";
 
@@ -10,7 +10,7 @@ const TranslationsSelect = ({
   onChange: (item?: SelectItem) => void;
 }) => {
   return (
-    <CustomeSelect
+    <CustomSelect
       icon={<MdOutlineTranslate />}
       options={translations
         .filter((lang) => lang.data.biography != "")

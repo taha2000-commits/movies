@@ -4,7 +4,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { AnyObject } from "../types/types";
 
 export type SelectItem = { innerText: string; value: string; data?: AnyObject };
-type CustomeSelectProps = {
+type CustomSelectProps = {
   options: SelectItem[];
   className?: string;
   itemsClassName?: string;
@@ -12,14 +12,14 @@ type CustomeSelectProps = {
   icon?: ReactNode;
   onChange?: (data?: SelectItem) => void;
 };
-const CustomeSelect = ({
+const CustomSelect = ({
   options,
   title,
   className,
   itemsClassName,
   icon,
   onChange = () => {},
-}: CustomeSelectProps) => {
+}: CustomSelectProps) => {
   const [status, setStatus] = useState<boolean>(false);
   const [choosed, setChoosed] = useState<
     { id: number; item: SelectItem } | undefined
@@ -66,4 +66,4 @@ const CustomeSelect = ({
   );
 };
 
-export default CustomeSelect;
+export default CustomSelect;

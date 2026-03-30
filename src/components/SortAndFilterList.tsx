@@ -1,53 +1,46 @@
 import { useSearchParams } from "react-router-dom";
-import CustomeSelect from "../components/CustomeSelect";
+import CustomSelect from "./CustomSelect";
 import CustomeSlider from "../components/CustomeSlider";
 import DropDownMenu from "../components/DropDownMenu";
 import { useGenres } from "../hooks/useGenres";
 import useLanguages from "../hooks/useLanguages";
 import { MovieType } from "../services/all";
-import { SORT_OPTIONS } from "../utils/constants";
 import { ChangeEvent, useState } from "react";
+import SortSection from "./SortSection";
 
-const SortAndFilterList = ({ type }: { type: MovieType }) => {
+const SortAndFilterList = ({
+  type,
+  closeFilterSidebar,
+}: {
+  type: MovieType;
+  closeFilterSidebar: () => void;
+}) => {
   const [URLSearchParams, SetURLSearchParams] = useSearchParams();
   const { data: langs } = useLanguages();
   const { data: genres } = useGenres(type);
   const [selectedGenres, setSelectedGenres] = useState<string[] | undefined>(
     URLSearchParams.get("genres")?.split(",") || undefined,
   );
+
   const handleSearch = () => {
     URLSearchParams.forEach((val, key) => {
       if (val == "") URLSearchParams.delete(key);
     });
     SetURLSearchParams(URLSearchParams);
+    closeFilterSidebar();
   };
   const handleClearSearch = () => {
     setSelectedGenres(undefined);
     SetURLSearchParams({});
   };
-
   return (
     <div className="flex w-full min-w-[200px] flex-col gap-3">
-      <DropDownMenu title="Sort" className="bg-white/20">
-        <div className="">
-          <div className="">Sort By</div>
-          <CustomeSelect
-            options={SORT_OPTIONS}
-            title={URLSearchParams.get("sortby") || ""}
-            className="w-full justify-between"
-            onChange={(data) => {
-              if (data?.value) {
-                URLSearchParams.set("sortby", data.value);
-              }
-            }}
-          />
-        </div>
-      </DropDownMenu>
-      <DropDownMenu title="Filter" className="bg-white/20">
+      <SortSection URLSearchParams={URLSearchParams} />
+      <DropDownMenu title="Filter" className="bg-white/10">
         <div className="flex flex-col gap-5">
           <div className="">
             <div className="mb-3">Language</div>
-            <CustomeSelect
+            <CustomSelect
               options={
                 langs?.sort().map((lang) => ({
                   innerText: lang.english_name,
@@ -173,13 +166,13 @@ const SortAndFilterList = ({ type }: { type: MovieType }) => {
         </div>
       </DropDownMenu>
       <div
-        className="w-full cursor-pointer rounded-xl bg-white/20 p-3 text-center hover:bg-primary/30"
+        className="w-full cursor-pointer rounded-xl bg-white/10 p-3 text-center hover:bg-primary/30"
         onClick={handleSearch}
       >
         Search
       </div>
       <div
-        className="w-full cursor-pointer rounded-xl bg-white/20 p-3 text-center hover:bg-primary/30"
+        className="w-full cursor-pointer rounded-xl bg-white/10 p-3 text-center hover:bg-primary/30"
         onClick={handleClearSearch}
       >
         Clear
