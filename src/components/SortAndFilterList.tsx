@@ -1,12 +1,11 @@
 import { useSearchParams } from "react-router-dom";
-import CustomSelect from "./CustomSelect";
 import CustomeSlider from "../components/CustomeSlider";
 import DropDownMenu from "../components/DropDownMenu";
 import { useGenres } from "../hooks/useGenres";
-import useLanguages from "../hooks/useLanguages";
 import { MovieType } from "../services/all";
 import { ChangeEvent, useState } from "react";
 import SortSection from "./SortSection";
+import FilterByLangs from "./FilterByLangs";
 
 const SortAndFilterList = ({
   type,
@@ -16,7 +15,6 @@ const SortAndFilterList = ({
   closeFilterSidebar: () => void;
 }) => {
   const [URLSearchParams, SetURLSearchParams] = useSearchParams();
-  const { data: langs } = useLanguages();
   const { data: genres } = useGenres(type);
   const [selectedGenres, setSelectedGenres] = useState<string[] | undefined>(
     URLSearchParams.get("genres")?.split(",") || undefined,
@@ -38,24 +36,7 @@ const SortAndFilterList = ({
       <SortSection URLSearchParams={URLSearchParams} />
       <DropDownMenu title="Filter" className="bg-white/10">
         <div className="flex flex-col gap-5">
-          <div className="">
-            <div className="mb-3">Language</div>
-            <CustomSelect
-              options={
-                langs?.sort().map((lang) => ({
-                  innerText: lang.english_name,
-                  value: lang.iso_639_1,
-                })) || []
-              }
-              title={URLSearchParams.get("lang") || ""}
-              className="w-full justify-between"
-              onChange={(data) => {
-                if (data?.value) {
-                  URLSearchParams.set("lang", data.value);
-                }
-              }}
-            />
-          </div>
+          <FilterByLangs URLSearchParams={URLSearchParams} />
           <hr />
           <div className="">
             <div className="mb-3">Genres</div>
