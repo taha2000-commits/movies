@@ -41,7 +41,9 @@ export default function SortSection({
   );
 
   useEffect(() => {
-    URLSearchParams.set("sortby", sortData.name + "." + sortData.type);
+    if (sortData.name && sortData.type) {
+      URLSearchParams.set("sortby", sortData.name + "." + sortData.type);
+    }
   }, [URLSearchParams, sortData.name, sortData.type]);
 
   return (
