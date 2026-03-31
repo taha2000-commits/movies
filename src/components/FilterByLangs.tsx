@@ -1,6 +1,7 @@
 import useLanguages from "../hooks/useLanguages";
 import { RefObject, useEffect, useRef, useState } from "react";
 import { Language } from "../types/types";
+import { FaX } from "react-icons/fa6";
 
 const FilterByLangs = ({
   URLSearchParams,
@@ -19,6 +20,14 @@ const FilterByLangs = ({
       value: lang.iso_639_1,
     })) || [];
 
+  const handleClear = () => {
+    if (input.current) {
+      input.current.value = "";
+      setLanguageOptions([]);
+      URLSearchParams.set("lang", "");
+    }
+  };
+
   useEffect(() => {
     if (searchedLang && input.current) {
       input.current.focus();
@@ -29,13 +38,13 @@ const FilterByLangs = ({
         ...(langs?.filter((lng) => lng.iso_639_1 == selectedLang) || []),
       ]);
     }
-  }, [langs, URLSearchParams]);
+  }, [langs, URLSearchParams, searchedLang, selectedLang]);
 
   return (
     <div className="">
-      <div className="mb-3">Language</div>
-      <div className="">
-        <div className="w-full bg-black/80">
+      <h4>Language</h4>
+      <div className="mt-2">
+        <div className="flex w-full items-center justify-between bg-black/80 pr-1">
           <input
             ref={input}
             type="text"
@@ -58,10 +67,19 @@ const FilterByLangs = ({
               setLanguageOptions(searchedLangs);
             }}
           />
+          {searchedLang && languageOptions.length > 0 && (
+            <div
+              className="cursor-pointer rounded-full bg-white/25 p-1 hover:bg-white/15"
+              onClick={handleClear}
+            >
+              <FaX size={12} />
+            </div>
+          )}
         </div>
         <div className="mt-2 overflow-hidden rounded-xl">
           {getLangsOpts.map((opt) => (
             <div
+              key={opt.value}
               className={`cursor-pointer border-b border-white/5 px-2 py-1 text-xs ${selectedLang === opt.value ? "bg-white/50" : "bg-black/20 hover:bg-black"} `}
               onClick={() => {
                 URLSearchParams.set("lang", opt.value);
