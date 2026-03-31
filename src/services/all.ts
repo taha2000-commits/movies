@@ -9,8 +9,8 @@ export interface GetAllParams {
   type: MovieType;
   page: number | 1;
   language?: string | "en-US";
-  dateGte?: string;
-  dateLte?: string;
+  dateGte?: string | Date;
+  dateLte?: string | Date;
   region?: string;
   sort_by?: string;
   voteAverageGte?: number;

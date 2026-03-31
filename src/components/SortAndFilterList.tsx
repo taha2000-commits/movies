@@ -2,10 +2,10 @@ import { useSearchParams } from "react-router-dom";
 import CustomeSlider from "../components/CustomeSlider";
 import DropDownMenu from "../components/DropDownMenu";
 import { MovieType } from "../services/all";
-import { ChangeEvent } from "react";
 import SortSection from "./SortSection";
 import FilterByLangs from "./FilterByLangs";
 import FilterByGenresSection from "./FilterByGenresSection";
+import FilterByDateSection from "./FilteByDateSection";
 
 const SortAndFilterList = ({
   type,
@@ -17,9 +17,10 @@ const SortAndFilterList = ({
   const [URLSearchParams, SetURLSearchParams] = useSearchParams();
 
   const handleSearch = () => {
-    URLSearchParams.forEach((val, key) => {
-      if (val == "") URLSearchParams.delete(key);
+    Array.from(URLSearchParams.entries()).forEach((entry) => {
+      if (entry[1] == "") URLSearchParams.delete(entry[0]);
     });
+
     SetURLSearchParams(URLSearchParams);
     closeFilterSidebar();
   };
@@ -38,39 +39,8 @@ const SortAndFilterList = ({
             URLSearchParams={URLSearchParams}
           />
           <hr />
-          <div className="">
-            <div className="mb-3">Release Dates</div>
-            <div className="flex flex-col gap-3">
-              <div className="flex flex-wrap items-center gap-2">
-                <span>From:</span>
-                <input
-                  title="from-date"
-                  type="date"
-                  name="from-date"
-                  id=""
-                  value={URLSearchParams.get("released_from") || undefined}
-                  className="border border-primary bg-transparent p-1 outline-none"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    URLSearchParams.set("released_from", e.target.value)
-                  }
-                />
-              </div>
-              <div className="flex flex-wrap items-center gap-2">
-                <span>To:</span>
-                <input
-                  title="from-date"
-                  type="date"
-                  name="from-date"
-                  id=""
-                  value={URLSearchParams.get("released_to") || undefined}
-                  className="border border-primary bg-transparent p-1 outline-none"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    URLSearchParams.set("released_to", e.target.value)
-                  }
-                />
-              </div>
-            </div>
-          </div>
+          <FilterByDateSection URLSearchParams={URLSearchParams} />
+
           <hr />
           <div className="">
             <div className="mb-3">Averege Rating</div>

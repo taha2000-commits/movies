@@ -7,7 +7,6 @@ import { MovieType } from "../services/all";
 import Loader from "../components/Loader";
 import Pagination from "../components/Pagination";
 import { useState } from "react";
-import { format } from "date-fns";
 import { FaFilter } from "react-icons/fa";
 import { MdClear } from "react-icons/md";
 
@@ -30,13 +29,10 @@ const AllMoviesPage = ({ type }: { type: MovieType }) => {
     with_original_language: URLSearchParams.get("lang") || undefined,
     sort_by: URLSearchParams.get("sortby") || undefined,
     dateGte: URLSearchParams.get("released_from")
-      ? format(
-          new Date(URLSearchParams.get("released_from") || ""),
-          "yyyy-MM-dd",
-        )
+      ? new Date(URLSearchParams.get("released_from") || "")
       : undefined,
     dateLte: URLSearchParams.get("released_to")
-      ? format(new Date(URLSearchParams.get("released_to") || ""), "yyyy-MM-dd")
+      ? new Date(URLSearchParams.get("released_to") || "")
       : undefined,
     voteAverageGte: Number(URLSearchParams.get("min_rate")) || undefined,
     voteAverageLte: Number(URLSearchParams.get("max_rate")) || undefined,
