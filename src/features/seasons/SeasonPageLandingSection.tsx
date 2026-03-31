@@ -72,12 +72,6 @@ const SeasonPageLandingSection = ({ season }: { season: FullSeason }) => {
             <p className="line-clamp-3 max-w-[400px] text-sm sm:font-bold">
               {translatedObject?.overview || season.overview}
             </p>
-            <a
-              className="w-fit rounded-xl bg-primary px-5 py-2 font-title text-xl hover:bg-primary/50"
-              href="#sec-2"
-            >
-              Trailers
-            </a>
           </div>
         </div>
         <div className="col-span-1 flex w-full flex-col gap-2">
