@@ -5,7 +5,7 @@
     "./src/main.tsx",
     "./src/vite-env.d.ts",
     "./src/components/CustomSelect.tsx",
-    "./src/components/customeslider.tsx",
+    "./src/components/CustomSlider.tsx",
     "./src/components/dotspan.tsx",
     "./src/components/draggablebox.tsx",
     "./src/components/dropdownmenu.tsx",

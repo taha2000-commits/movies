@@ -1,7 +1,7 @@
 import { MutableRefObject, useRef, useState } from "react";
-import "./CustomeSlider.css";
+import "./CustomSlider.css";
 import { useSearchParams } from "react-router-dom";
-interface CustomeSlider {
+interface CustomSlider {
   min: number;
   max: number;
   step: number;
@@ -10,7 +10,7 @@ interface CustomeSlider {
   paramsMinName?: string;
   paramsMaxName?: string;
 }
-const CustomeSlider = ({
+const CustomSlider = ({
   min,
   max,
   step,
@@ -18,21 +18,25 @@ const CustomeSlider = ({
   maxChange = () => {},
   paramsMaxName,
   paramsMinName,
-}: CustomeSlider) => {
+}: CustomSlider) => {
   const [URLSearchParams] = useSearchParams();
+
   const minValParams =
     Number(URLSearchParams.get(paramsMinName || "") || 0) || undefined;
+
   const maxValParams =
     Number(URLSearchParams.get(paramsMaxName || "") || 0) || undefined;
+
   const [minVal, setMinVal] = useState<number>(minValParams || min);
   const [maxVal, setMaxVal] = useState<number>(maxValParams || max);
+
   const progress =
     useRef<HTMLInputElement>() as MutableRefObject<HTMLInputElement>;
   const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(e.target.value) < maxVal) {
       progress.current.style.left = `${(Number(e.target.value) / max) * 100}%`;
       setMinVal(Number(e.target.value));
-      minChange(minVal);
+      minChange(Number(e.target.value));
     }
   };
   const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,22 +45,23 @@ const CustomeSlider = ({
         100 - (Number(e.target.value) / max) * 100
       }%`;
       setMaxVal(Number(e.target.value));
-      maxChange(maxVal);
+      maxChange(Number(e.target.value));
     }
   };
 
   return (
     <div className="">
-      <div className="mb-5 flex items-center justify-evenly">
-        <div className="border-secondary w-fit rounded-lg border-2 p-2">
+      <div className="mb-3 flex items-center justify-evenly">
+        <div className="flex h-8 w-8 items-center justify-center bg-black text-sm">
           {minVal}
         </div>
         <span>-</span>
-        <div className="border-secondary w-fit rounded-lg border-2 p-2">
+        <div className="flex h-8 w-8 items-center justify-center bg-black text-sm">
           {maxVal}
         </div>
       </div>
-      <div className="slider bg-secondary/20 relative h-2 w-full rounded-full bg-white/30">
+
+      <div className="slider bg-secondary/20 relative h-0.5 w-full rounded-full bg-white/30">
         <div
           ref={progress}
           className={`slider-progress bg-secondary absolute h-full rounded-full bg-primary`}
@@ -75,7 +80,7 @@ const CustomeSlider = ({
           value={minVal}
           min={min}
           max={max}
-          className="range-inp pointer-events-none absolute -top-2 h-2 w-full appearance-none bg-transparent"
+          className="range-inp pointer-events-none absolute -top-1 h-2 w-full -translate-y-0.5 appearance-none bg-transparent"
           onChange={handleMinChange}
         />
         <input
@@ -86,7 +91,7 @@ const CustomeSlider = ({
           step={step}
           min={min}
           max={max}
-          className="range-inp pointer-events-none absolute -top-2 h-2 w-full appearance-none bg-transparent"
+          className="range-inp pointer-events-none absolute -top-1 h-2 w-full -translate-y-0.5 appearance-none bg-transparent"
           onChange={handleMaxChange}
         />
       </div>
@@ -94,4 +99,4 @@ const CustomeSlider = ({
   );
 };
 
-export default CustomeSlider;
+export default CustomSlider;

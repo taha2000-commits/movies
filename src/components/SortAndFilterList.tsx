@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import CustomeSlider from "../components/CustomeSlider";
+import CustomSlider from "../components/CustomSlider";
 import DropDownMenu from "../components/DropDownMenu";
 import { MovieType } from "../services/all";
 import SortSection from "./SortSection";
@@ -40,12 +40,11 @@ const SortAndFilterList = ({
           />
           <hr />
           <FilterByDateSection URLSearchParams={URLSearchParams} />
-
           <hr />
-          <div className="">
-            <div className="mb-3">Averege Rating</div>
-            <CustomeSlider
-              min={1}
+          <div className="mb-3">
+            <div className="mb-3">Average Rating</div>
+            <CustomSlider
+              min={0}
               max={10}
               step={0.1}
               paramsMinName="min_rate"
@@ -58,17 +57,18 @@ const SortAndFilterList = ({
               }
             />
           </div>
-          <div className="">
+          <hr />
+          <div className="mb-3">
             <div className="mb-3">Rauntime</div>
-            <CustomeSlider
+            <CustomSlider
               min={1}
               max={400}
               step={1}
               paramsMaxName="max_runtime"
               paramsMinName="min_runtime"
-              minChange={(min) =>
-                URLSearchParams.set("min_runtime", min.toString())
-              }
+              minChange={(min) => {
+                URLSearchParams.set("min_runtime", min.toString());
+              }}
               maxChange={(max) =>
                 URLSearchParams.set("max_runtime", max.toString())
               }

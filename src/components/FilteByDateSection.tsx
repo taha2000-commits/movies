@@ -2,15 +2,17 @@ import { format } from "date-fns";
 import { Reducer, useEffect, useReducer, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { MdClear } from "react-icons/md";
+
 type Period = {
   startDate: string | Date | undefined | null;
   endDate: string | Date | undefined | null;
 };
+
 type Action = {
   type: string;
   payload?: Date | null;
 };
+
 const datesReducer = (state: Period, action: Action): Period => {
   switch (action.type) {
     case "SetSD":
