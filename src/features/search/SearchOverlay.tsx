@@ -67,7 +67,7 @@ const SearchOverlay = () => {
           />
         </div>
         <div
-          className="scrollbar-hide flex flex-1 flex-col items-center gap-1 overflow-y-scroll"
+          className="scrollbar flex flex-1 flex-col items-center gap-1 overflow-y-scroll pr-2"
           ref={scrollableSec}
         >
           {!isLoading ? (
@@ -89,25 +89,25 @@ const SearchOverlay = () => {
               <Loader size={30} />
             </div>
           )}
-          <div className="mt-3 flex w-full justify-end">
-            <Pagination
-              currentPage={page}
-              totalPages={searchedData?.total_pages || 1}
-              changePageState={setPage}
-              onGoNext={() =>
-                scrollableSec.current.scrollTo({
-                  top: 0,
-                  behavior: "smooth",
-                })
-              }
-              onGoPrevious={() =>
-                scrollableSec.current.scrollTo({
-                  top: 0,
-                  behavior: "smooth",
-                })
-              }
-            />
-          </div>
+        </div>
+        <div className="flex w-full justify-end">
+          <Pagination
+            currentPage={page}
+            totalPages={searchedData?.total_pages || 1}
+            changePageState={setPage}
+            onGoNext={() =>
+              scrollableSec.current.scrollTo({
+                top: 0,
+                behavior: "smooth",
+              })
+            }
+            onGoPrevious={() =>
+              scrollableSec.current.scrollTo({
+                top: 0,
+                behavior: "smooth",
+              })
+            }
+          />
         </div>
       </div>
     </div>
