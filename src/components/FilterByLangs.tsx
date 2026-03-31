@@ -1,7 +1,7 @@
 import useLanguages from "../hooks/useLanguages";
 import { RefObject, useEffect, useRef, useState } from "react";
 import { Language } from "../types/types";
-import { FaX } from "react-icons/fa6";
+import { MdClear } from "react-icons/md";
 
 const FilterByLangs = ({
   URLSearchParams,
@@ -72,7 +72,7 @@ const FilterByLangs = ({
               className="cursor-pointer rounded-full bg-white/25 p-1 hover:bg-white/15"
               onClick={handleClear}
             >
-              <FaX size={12} />
+              <MdClear />
             </div>
           )}
         </div>

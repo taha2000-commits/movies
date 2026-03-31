@@ -9,7 +9,7 @@ import Pagination from "../components/Pagination";
 import { useState } from "react";
 import { format } from "date-fns";
 import { FaFilter } from "react-icons/fa";
-import { FaX } from "react-icons/fa6";
+import { MdClear } from "react-icons/md";
 
 const AllMoviesPage = ({ type }: { type: MovieType }) => {
   const [URLSearchParams, SetURLSearchParams] = useSearchParams();
@@ -87,7 +87,11 @@ const AllMoviesPage = ({ type }: { type: MovieType }) => {
             onClick={onFilterIconClick}
             className={`overflow-y-uto absolute left-full top-[50%] z-[1000] flex aspect-square -translate-y-[50%] cursor-pointer items-center justify-center rounded-br-full rounded-tr-full p-4 pl-2 transition-all duration-1000 ${filterIconClicked ? "bg-black" : "bg-white"}`}
           >
-            {filterIconClicked ? <FaX /> : <FaFilter className="text-black" />}
+            {filterIconClicked ? (
+              <MdClear />
+            ) : (
+              <FaFilter className="text-black" />
+            )}
           </div>
         </div>
       </div>
