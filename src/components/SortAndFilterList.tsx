@@ -1,11 +1,11 @@
 import { useSearchParams } from "react-router-dom";
 import CustomeSlider from "../components/CustomeSlider";
 import DropDownMenu from "../components/DropDownMenu";
-import { useGenres } from "../hooks/useGenres";
 import { MovieType } from "../services/all";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import SortSection from "./SortSection";
 import FilterByLangs from "./FilterByLangs";
+import FilterByGenresSection from "./FilterByGenresSection";
 
 const SortAndFilterList = ({
   type,
@@ -15,10 +15,6 @@ const SortAndFilterList = ({
   closeFilterSidebar: () => void;
 }) => {
   const [URLSearchParams, SetURLSearchParams] = useSearchParams();
-  const { data: genres } = useGenres(type);
-  const [selectedGenres, setSelectedGenres] = useState<string[] | undefined>(
-    URLSearchParams.get("genres")?.split(",") || undefined,
-  );
 
   const handleSearch = () => {
     URLSearchParams.forEach((val, key) => {
@@ -28,7 +24,6 @@ const SortAndFilterList = ({
     closeFilterSidebar();
   };
   const handleClearSearch = () => {
-    setSelectedGenres(undefined);
     SetURLSearchParams({});
   };
   return (
@@ -38,45 +33,10 @@ const SortAndFilterList = ({
         <div className="flex flex-col gap-5">
           <FilterByLangs URLSearchParams={URLSearchParams} />
           <hr />
-          <div className="">
-            <div className="mb-3">Genres</div>
-            <div className="flex flex-wrap gap-2">
-              {genres?.genres.map((genre, i) => (
-                <span
-                  key={i}
-                  className={`cursor-pointer rounded-full border px-2 py-1 hover:bg-primary ${selectedGenres?.includes(`${genre.id}`) ? "bg-primary" : ""}`}
-                  onClick={() => {
-                    if (selectedGenres?.includes(`${genre.id}`)) {
-                      setSelectedGenres((sg) =>
-                        sg?.filter((i) => i != genre.id.toString()),
-                      );
-                      URLSearchParams.set(
-                        "genres",
-                        URLSearchParams.get("genres")!
-                          .split(",")
-                          .filter((item) => item != genre.id.toString())
-                          .join(","),
-                      );
-                    } else {
-                      setSelectedGenres((sg) =>
-                        sg
-                          ? [...sg, genre.id.toString()]
-                          : [genre.id.toString()],
-                      );
-                      URLSearchParams.set(
-                        "genres",
-                        URLSearchParams.get("genres")
-                          ? URLSearchParams.get("genres") + "," + genre.id
-                          : `${genre.id}`,
-                      );
-                    }
-                  }}
-                >
-                  {genre.name}
-                </span>
-              ))}
-            </div>
-          </div>
+          <FilterByGenresSection
+            type={type}
+            URLSearchParams={URLSearchParams}
+          />
           <hr />
           <div className="">
             <div className="mb-3">Release Dates</div>
