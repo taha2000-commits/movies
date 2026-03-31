@@ -11,6 +11,7 @@ export function useTrendingMovies({
   const query = useQuery({
     queryKey: ["trending", type, period],
     queryFn: () => getTrendingMovies({ period, type }),
+    placeholderData: (prev) => prev,
   });
   return query;
 }
