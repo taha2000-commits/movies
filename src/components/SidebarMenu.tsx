@@ -1,8 +1,10 @@
 import { useGSAP } from "@gsap/react";
 import { IoClose } from "react-icons/io5";
 import gsap from "gsap";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 const SidebarMenu = () => {
+  const location = useLocation();
+
   const nav = useNavigate();
   const { contextSafe } = useGSAP();
   const closeMenu = contextSafe(() =>
@@ -22,15 +24,16 @@ const SidebarMenu = () => {
       />
       <ul className="text-center font-title text-4xl">
         <li
-          className="cursor-pointer px-20 py-3 hover:bg-white/20 hover:text-primary"
+          className={`cursor-pointer px-20 py-3 hover:text-primary ${location.pathname === "/movies" ? "text-primary" : ""}`}
           onClick={() => {
             nav("/movies");
+            closeMenu();
           }}
         >
           Movies
         </li>
         <li
-          className="cursor-pointer px-20 py-3 hover:bg-white/20 hover:text-primary"
+          className={`cursor-pointer px-20 py-3 hover:text-primary ${location.pathname === "/tvs" ? "text-primary" : ""}`}
           onClick={() => {
             nav("/tvs");
             closeMenu();
