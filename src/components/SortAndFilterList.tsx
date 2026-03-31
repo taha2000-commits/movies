@@ -27,6 +27,7 @@ const SortAndFilterList = ({
   const handleClearSearch = () => {
     SetURLSearchParams({});
   };
+
   return (
     <div className="flex w-full min-w-[200px] flex-col gap-3">
       <SortSection URLSearchParams={URLSearchParams} />
@@ -55,6 +56,7 @@ const SortAndFilterList = ({
               maxChange={(max) =>
                 URLSearchParams.set("max_rate", max.toString())
               }
+              URLSearchParams={URLSearchParams}
             />
           </div>
           <hr />
@@ -72,6 +74,7 @@ const SortAndFilterList = ({
               maxChange={(max) =>
                 URLSearchParams.set("max_runtime", max.toString())
               }
+              URLSearchParams={URLSearchParams}
             />
           </div>
         </div>

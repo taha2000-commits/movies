@@ -1,6 +1,5 @@
-import { MutableRefObject, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import "./CustomSlider.css";
-import { useSearchParams } from "react-router-dom";
 interface CustomSlider {
   min: number;
   max: number;
@@ -9,6 +8,7 @@ interface CustomSlider {
   maxChange?: (max: number) => void;
   paramsMinName?: string;
   paramsMaxName?: string;
+  URLSearchParams: URLSearchParams;
 }
 const CustomSlider = ({
   min,
@@ -18,9 +18,8 @@ const CustomSlider = ({
   maxChange = () => {},
   paramsMaxName,
   paramsMinName,
+  URLSearchParams,
 }: CustomSlider) => {
-  const [URLSearchParams] = useSearchParams();
-
   const minValParams =
     Number(URLSearchParams.get(paramsMinName || "") || 0) || undefined;
 
@@ -48,6 +47,11 @@ const CustomSlider = ({
       maxChange(Number(e.target.value));
     }
   };
+  
+  useEffect(() => {
+    setMaxVal(maxValParams || max);
+    setMinVal(minValParams || min);
+  }, [URLSearchParams, max, maxValParams, min, minValParams]);
 
   return (
     <div className="">
